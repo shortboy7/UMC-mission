@@ -25,9 +25,8 @@ public class Terms {
     private Long id;
 
     private String title;
-    private String body;
-    private Boolean optional;
 
-    @OneToMany(mappedBy = "terms", cascade = CascadeType.ALL)
-    private List<MemberAgree> memberAgreeList = new ArrayList<>();
+    private String body;
+
+    private Boolean optional;
 }
