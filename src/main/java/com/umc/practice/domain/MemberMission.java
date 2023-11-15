@@ -1,10 +1,6 @@
 package com.umc.practice.domain;
 
-import com.umc.practice.domain.common.TrackEntity;
-import com.umc.practice.domain.enums.Gender;
-import com.umc.practice.domain.enums.MemberStatus;
-import com.umc.practice.domain.enums.SocialType;
-import java.time.LocalDate;
+import com.umc.practice.domain.enums.MissionStatus;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,20 +18,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Member extends TrackEntity {
+public class MemberMission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String address;
-    private String specAddress;
+
     @Enumerated(EnumType.STRING)
-    private Gender gender;
-    @Enumerated(EnumType.STRING)
-    private SocialType socialType;
-    @Enumerated(EnumType.STRING)
-    private MemberStatus status;
-    private LocalDate inactiveDate;
-    private String email;
-    private Integer point;
+    private MissionStatus status;
 }
