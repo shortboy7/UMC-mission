@@ -2,9 +2,12 @@ package com.umc.practice.domain;
 
 import java.time.LocalDate;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +25,12 @@ public class Mission {
     private Long id;
 
     private Integer reward;
+
     private LocalDate deadline;
+
     private String missionSpec;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 }
