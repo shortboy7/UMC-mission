@@ -1,6 +1,7 @@
 package com.umc.practice.domain;
 
 import com.umc.practice.domain.enums.MissionStatus;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,6 +28,7 @@ public class MemberMission {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'CHALLENGING'")
     private MissionStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)

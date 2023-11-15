@@ -1,6 +1,7 @@
 package com.umc.practice.domain;
 
 import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,10 +25,13 @@ public class Mission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Integer reward;
 
+    @Column(nullable = false)
     private LocalDate deadline;
 
+    @Column(nullable = false)
     private String missionSpec;
 
     @ManyToOne(fetch = FetchType.LAZY)

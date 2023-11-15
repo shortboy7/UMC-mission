@@ -1,5 +1,6 @@
 package com.umc.practice.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,12 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 40)
     private String name;
+
+    @Column(nullable = false, length = 40)
     private String address;
+
+    @Column(nullable = false)
     private Float score;
 }

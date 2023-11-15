@@ -1,5 +1,6 @@
 package com.umc.practice.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,11 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 40)
     private String title;
+
+    @Column(nullable = false)
     private Float score;
 
     @ManyToOne(fetch = FetchType.LAZY)
