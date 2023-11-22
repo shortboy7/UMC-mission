@@ -2,7 +2,9 @@ package com.umc.practice.global.ResponseType.exception;
 
 import com.umc.practice.global.ResponseType.code.BaseErrorCode;
 import com.umc.practice.global.ResponseType.code.ErrorReasonDTO;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class GeneralException extends RuntimeException{
     private BaseErrorCode code;
 
