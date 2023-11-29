@@ -33,6 +33,7 @@ public class MemberPrefer extends TrackEntity {
     private FoodCategory foodCategory;
 
     public void setMember(Member member) {
+        member.addPrefer(this);
         this.member = member;
     }
 }

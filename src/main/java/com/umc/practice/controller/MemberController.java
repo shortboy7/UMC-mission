@@ -1,5 +1,7 @@
 package com.umc.practice.controller;
 
+import com.umc.practice.converter.MemberConverter;
+import com.umc.practice.domain.Member;
 import com.umc.practice.dto.MemberRequestDTO;
 import com.umc.practice.dto.MemberResponseDTO;
 import com.umc.practice.global.ResponseType.code.BaseResponse;
@@ -14,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
-    private final MemberCommandService service;
+    private final MemberCommandService memberService;
 
     public BaseResponse<MemberResponseDTO.JoinResultDTO> join(@RequestBody @Valid MemberRequestDTO.JoinDto request) {
-        return null;
+        Member member = memberService.joinMember(request);
+        return BaseResponse.onSuccess(MemberConverter.toJoinResultDTO(member));
     }
 }

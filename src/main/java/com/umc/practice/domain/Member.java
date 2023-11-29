@@ -72,4 +72,11 @@ public class Member extends TrackEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+
+    public void addPrefer(MemberPrefer prefer) {
+        this.memberPreferList.add(prefer);
+    }
+    public void removePrefer(MemberPrefer prefer) {
+        this.memberPreferList.remove(prefer);
+    }
 }
