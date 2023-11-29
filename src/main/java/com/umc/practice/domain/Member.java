@@ -32,6 +32,9 @@ public class Member extends TrackEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Integer age;
+
     @Column(nullable = false, length = 20)
     private String name;
 
@@ -53,7 +56,7 @@ public class Member extends TrackEntity {
 
     private LocalDate inactiveDate;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = true, length = 50)
     private String email;
 
     private Integer point;

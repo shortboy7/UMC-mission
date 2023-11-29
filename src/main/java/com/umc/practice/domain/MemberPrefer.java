@@ -31,4 +31,8 @@ public class MemberPrefer extends TrackEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private FoodCategory foodCategory;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 }
