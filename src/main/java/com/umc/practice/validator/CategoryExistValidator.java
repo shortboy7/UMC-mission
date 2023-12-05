@@ -1,5 +1,6 @@
 package com.umc.practice.validator;
 
+import com.umc.practice.domain.FoodCategory;
 import com.umc.practice.global.ResponseType.code.status.ErrorStatus;
 import com.umc.practice.repository.FoodCategoryRepository;
 import java.util.List;
@@ -20,15 +21,13 @@ public class CategoryExistValidator implements
 
     @Override
     public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
-        boolean isValid = values.stream()
-                .allMatch(value -> foodCategoryRepository.existsById(value));
-
+        List<FoodCategory> categories = foodCategoryRepository.findAllById(values);
+        boolean isValid = (categories.size() == values.size());
         if (!isValid) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(ErrorStatus.NO_SUCH_FOOD_CATEGORY.toString())
                     .addConstraintViolation();
         }
-
         return isValid;
     }
 }

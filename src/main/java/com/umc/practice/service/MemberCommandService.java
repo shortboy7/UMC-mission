@@ -6,8 +6,6 @@ import com.umc.practice.domain.FoodCategory;
 import com.umc.practice.domain.Member;
 import com.umc.practice.domain.MemberPrefer;
 import com.umc.practice.dto.MemberRequestDTO;
-import com.umc.practice.global.ResponseType.code.status.ErrorStatus;
-import com.umc.practice.global.ResponseType.exception.handler.FoodCategoryHandler;
 import com.umc.practice.repository.FoodCategoryRepository;
 import com.umc.practice.repository.MemberRepository;
 import java.util.List;
@@ -25,8 +23,6 @@ public class MemberCommandService {
     public Member joinMember(MemberRequestDTO.JoinDto request) {
         Member member = MemberConverter.toMember(request);
         List<FoodCategory> categories = foodCategoryRepository.findAllById(request.getPreferCategory());
-        if (categories.size() != request.getPreferCategory().size())
-            throw new FoodCategoryHandler(ErrorStatus.NO_SUCH_FOOD_CATEGORY);
         List<MemberPrefer> memberPrefers = MemberPreferConverter.toMemberPreferList(categories);
         memberPrefers.forEach(prefer -> prefer.setMember(member));
         return memberRepository.save(member);

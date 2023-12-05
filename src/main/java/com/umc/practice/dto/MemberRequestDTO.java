@@ -5,10 +5,12 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class MemberRequestDTO {
     @Getter
+    @AllArgsConstructor
     public static class JoinDto{
         @NotBlank
         String name;
