@@ -8,6 +8,7 @@ import com.umc.practice.global.ResponseType.code.BaseResponse;
 import com.umc.practice.service.MemberCommandService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberCommandService memberService;
 
+    @PostMapping("/")
     public BaseResponse<MemberResponseDTO.JoinResultDTO> join(@RequestBody @Valid MemberRequestDTO.JoinDto request) {
         Member member = memberService.joinMember(request);
         return BaseResponse.onSuccess(MemberConverter.toJoinResultDTO(member));

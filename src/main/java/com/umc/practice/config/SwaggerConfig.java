@@ -16,21 +16,21 @@ public class SwaggerConfig {
                 .description("UMC Server WorkBook API 명세서")
                 .version("1.0.0");
 
-        String jwtSchemeName = "JWT TOKEN";
+//        String jwtSchemeName = "JWT TOKEN";
         // API 요청헤더에 인증정보 포함
-        SecurityRequirement securityRequirement = new SecurityRequirement().addList(jwtSchemeName);
+//        SecurityRequirement securityRequirement = new SecurityRequirement().addList(jwtSchemeName);
         // SecuritySchemes 등록
-        Components components = new Components()
-                .addSecuritySchemes(jwtSchemeName, new SecurityScheme()
-                        .name(jwtSchemeName)
-                        .type(SecurityScheme.Type.HTTP) // HTTP 방식
-                        .scheme("bearer")
-                        .bearerFormat("JWT"));
+//        Components components = new Components()
+//                .addSecuritySchemes(jwtSchemeName, new SecurityScheme()
+//                        .name(jwtSchemeName)
+//                        .type(SecurityScheme.Type.HTTP) // HTTP 방식
+//                        .scheme("bearer")
+//                        .bearerFormat("JWT"));
 
         return new OpenAPI()
-                .addServersItem(new Server().url("/"))
-                .info(info)
-                .addSecurityItem(securityRequirement)
-                .components(components);
+//                .addServersItem(new Server().url("/"))
+                .info(info);
+//                .addSecurityItem(securityRequirement)
+//                .components(components);
     }
 }
