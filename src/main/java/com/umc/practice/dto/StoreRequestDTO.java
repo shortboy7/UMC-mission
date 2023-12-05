@@ -1,6 +1,7 @@
 package com.umc.practice.dto;
 
 import com.umc.practice.validator.ExistUser;
+import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,5 +29,15 @@ public class StoreRequestDTO {
         @NotNull
         @ExistUser
         private Long memberId;
+    }
+    @Getter
+    @AllArgsConstructor
+    public static class NewStoreMission {
+        @NotNull
+        private Integer reward;
+        @NotNull
+        private LocalDate deadline;
+        @NotBlank
+        private String missionSpec;
     }
 }

@@ -2,6 +2,7 @@ package com.umc.practice.controller;
 
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
+import com.umc.practice.dto.StoreResponseDTO.NewMission;
 import com.umc.practice.dto.StoreResponseDTO.NewReview;
 import com.umc.practice.dto.StoreResponseDTO.NewStore;
 import com.umc.practice.service.StoreService;
@@ -33,5 +34,12 @@ public class StoreController {
             @RequestBody @Valid StoreRequestDTO.NewStoreReview request) {
         NewReview newReview = this.storeService.enrollReview(storeId, request);
         return ResponseEntity.ok(newReview);
+    }
+    @PostMapping("/{storeId}/mission")
+    public ResponseEntity<StoreResponseDTO.NewMission> newMission(
+            @ExistStore @PathVariable("storeId") Long storeId,
+            @RequestBody @Valid StoreRequestDTO.NewStoreMission request) {
+        NewMission newMission = this.storeService.enrollMission(storeId, request);
+        return ResponseEntity.ok(newMission);
     }
 }

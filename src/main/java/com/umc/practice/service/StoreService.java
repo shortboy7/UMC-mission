@@ -1,12 +1,18 @@
 package com.umc.practice.service;
 
+import com.umc.practice.converter.MissionConverter;
 import com.umc.practice.converter.StoreConverter;
 import com.umc.practice.domain.Member;
+import com.umc.practice.domain.Mission;
 import com.umc.practice.domain.Review;
 import com.umc.practice.domain.Store;
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
+import com.umc.practice.dto.StoreResponseDTO.NewMission;
+import com.umc.practice.global.ResponseType.code.status.ErrorStatus;
+import com.umc.practice.global.ResponseType.exception.GeneralException;
 import com.umc.practice.repository.MemberRepository;
+import com.umc.practice.repository.MissionRepository;
 import com.umc.practice.repository.ReviewRepository;
 import com.umc.practice.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +24,7 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
+    private final MissionRepository missionRepository;
 
     public StoreResponseDTO.NewStore enrollNewStore(StoreRequestDTO.NewStore req) {
         Store store = this.storeRepository
@@ -36,5 +43,14 @@ public class StoreService {
         Review review = StoreConverter.toReviewEntity(req, member, store);
         Review saved = reviewRepository.save(review);
         return new StoreResponseDTO.NewReview(saved.getId(), saved.getTitle(), saved.getScore());
+    }
+
+    public StoreResponseDTO.NewMission enrollMission(Long storeId, StoreRequestDTO.NewStoreMission req) {
+        Store store = storeRepository.findById(storeId).orElseThrow(
+            () -> new GeneralException(ErrorStatus.STORE_NOT_FOUND));
+        Mission mission = MissionConverter.toMissionEntity(req, store);
+        Mission save = missionRepository.save(mission);
+        return new NewMission(save.getId(), mission.getReward(),
+                mission.getDeadline(), mission.getMissionSpec());
     }
 }
