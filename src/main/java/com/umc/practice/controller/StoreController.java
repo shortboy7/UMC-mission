@@ -1,14 +1,15 @@
 package com.umc.practice.controller;
 
-import com.umc.practice.converter.StoreConverter;
-import com.umc.practice.domain.Store;
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
+import com.umc.practice.dto.StoreResponseDTO.NewReview;
 import com.umc.practice.dto.StoreResponseDTO.NewStore;
 import com.umc.practice.service.StoreService;
+import com.umc.practice.validator.ExistStore;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +26,12 @@ public class StoreController {
             @RequestBody @Valid StoreRequestDTO.NewStore request) {
         NewStore newStore = storeService.enrollNewStore(request);
         return ResponseEntity.ok(newStore);
+    }
+    @PostMapping("/{storeId}/review")
+    public ResponseEntity<StoreResponseDTO.NewReview> newReview(
+            @ExistStore @PathVariable(name = "storeId") Long storeId,
+            @RequestBody @Valid StoreRequestDTO.NewStoreReview request) {
+        NewReview newReview = this.storeService.enrollReview(storeId, request);
+        return ResponseEntity.ok(newReview);
     }
 }

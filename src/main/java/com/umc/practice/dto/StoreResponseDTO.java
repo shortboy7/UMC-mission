@@ -12,4 +12,11 @@ public class StoreResponseDTO {
         private String address;
         private Float score;
     }
+    @Getter
+    @AllArgsConstructor
+    public static class NewReview{
+        private Long id;
+        private String title;
+        private Float score;
+    }
 }
