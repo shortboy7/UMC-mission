@@ -7,6 +7,7 @@ import com.umc.practice.domain.Store;
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
 import com.umc.practice.dto.StoreResponseDTO.MissionDTO;
+import com.umc.practice.dto.StoreResponseDTO.MissionListDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,28 +46,6 @@ public class StoreConverter {
                 .createdAt(LocalDateTime.now())
                 .build();
     }
-    public static StoreResponseDTO.ReviewPreViewDTO reviewPreViewDTO(Review review){
-        return StoreResponseDTO.ReviewPreViewDTO.builder()
-                .ownerNickname(review.getMember().getName())
-                .score(review.getScore())
-                .createdAt(review.getCreatedAt().toLocalDate())
-                .body(review.getBody())
-                .build();
-    }
-    public static StoreResponseDTO.ReviewPreViewListDTO reviewPreViewListDTO(Page<Review> reviewList){
-
-        List<StoreResponseDTO.ReviewPreViewDTO> reviewPreViewDTOList = reviewList.stream()
-                .map(StoreConverter::reviewPreViewDTO).collect(Collectors.toList());
-
-        return StoreResponseDTO.ReviewPreViewListDTO.builder()
-                .isLast(reviewList.isLast())
-                .isFirst(reviewList.isFirst())
-                .totalPage(reviewList.getTotalPages())
-                .totalElements(reviewList.getTotalElements())
-                .listSize(reviewPreViewDTOList.size())
-                .reviewList(reviewPreViewDTOList)
-                .build();
-    }
 
     public static StoreResponseDTO.MissionDTO missionDTO(Mission mission) {
         return StoreResponseDTO.MissionDTO.builder()
@@ -76,7 +55,15 @@ public class StoreConverter {
                 .deadline(mission.getDeadline())
                 .build();
     }
-    public static List<StoreResponseDTO.MissionDTO> missionListDTO(Page<Mission> missionList) {
-        return missionList.stream().map(StoreConverter::missionDTO).collect(Collectors.toList());
+    public static StoreResponseDTO.MissionListDTO missionListDTO(Page<Mission> missionList) {
+        List<MissionDTO> missions = missionList.stream().map(StoreConverter::missionDTO).collect(Collectors.toList());
+        return MissionListDTO.builder()
+                .missionList(missions)
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .listSize(missions.size())
+                .build();
     }
 }

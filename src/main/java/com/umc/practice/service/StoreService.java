@@ -1,6 +1,7 @@
 package com.umc.practice.service;
 
 import com.umc.practice.converter.MissionConverter;
+import com.umc.practice.converter.ReviewConverter;
 import com.umc.practice.converter.StoreConverter;
 import com.umc.practice.domain.Member;
 import com.umc.practice.domain.Mission;
@@ -68,10 +69,10 @@ public class StoreService {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.STORE_NOT_FOUND));
         Page<Review> storePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
-        return StoreConverter.reviewPreViewListDTO(storePage);
+        return ReviewConverter.reviewPreViewListDTO(storePage);
     }
 
-    public List<StoreResponseDTO.MissionDTO> getMissionList(Long storeId, Integer page) {
+    public StoreResponseDTO.MissionListDTO getMissionList(Long storeId, Integer page) {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.STORE_NOT_FOUND));
         Page<Mission> missionPage = missionRepository.findAllByStore(store, PageRequest.of(page, 10));

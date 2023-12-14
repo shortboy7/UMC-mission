@@ -68,4 +68,17 @@ public class StoreResponseDTO {
         private LocalDate deadline;
         private String missionSpec;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionListDTO{
+        private List<MissionDTO> missionList;
+        private Integer listSize;
+        private Integer totalPage;
+        private Long totalElements;
+        private Boolean isFirst;
+        private Boolean isLast;
+    }
 }

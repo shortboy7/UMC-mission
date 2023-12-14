@@ -3,6 +3,7 @@ package com.umc.practice.controller;
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
 import com.umc.practice.dto.StoreResponseDTO.MissionDTO;
+import com.umc.practice.dto.StoreResponseDTO.MissionListDTO;
 import com.umc.practice.dto.StoreResponseDTO.NewMission;
 import com.umc.practice.dto.StoreResponseDTO.NewReview;
 import com.umc.practice.dto.StoreResponseDTO.NewStore;
@@ -83,10 +84,10 @@ public class StoreController {
     @Parameters({
             @Parameter(name = "storeId", description = "가게의 아이디, path variable 입니다!")
     })
-    public BaseResponse<List<StoreResponseDTO.MissionDTO>> getMissionList(
+    public BaseResponse<StoreResponseDTO.MissionListDTO> getMissionList(
             @ExistStore @PathVariable(name = "storeId") Long storeId,
             @RequestParam(name = "page") Integer page) {
-        List<MissionDTO> missionList = storeService.getMissionList(storeId, page);
+        MissionListDTO missionList = storeService.getMissionList(storeId, page);
         return BaseResponse.onSuccess(missionList);
     }
 }
