@@ -1,10 +1,12 @@
 package com.umc.practice.converter;
 
 import com.umc.practice.domain.Member;
+import com.umc.practice.domain.Mission;
 import com.umc.practice.domain.Review;
 import com.umc.practice.domain.Store;
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
+import com.umc.practice.dto.StoreResponseDTO.MissionDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,5 +66,17 @@ public class StoreConverter {
                 .listSize(reviewPreViewDTOList.size())
                 .reviewList(reviewPreViewDTOList)
                 .build();
+    }
+
+    public static StoreResponseDTO.MissionDTO missionDTO(Mission mission) {
+        return StoreResponseDTO.MissionDTO.builder()
+                .id(mission.getId())
+                .missionSpec(mission.getMissionSpec())
+                .reward(mission.getReward())
+                .deadline(mission.getDeadline())
+                .build();
+    }
+    public static List<StoreResponseDTO.MissionDTO> missionListDTO(Page<Mission> missionList) {
+        return missionList.stream().map(StoreConverter::missionDTO).collect(Collectors.toList());
     }
 }

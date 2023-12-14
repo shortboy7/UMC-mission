@@ -8,6 +8,7 @@ import com.umc.practice.domain.Review;
 import com.umc.practice.domain.Store;
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
+import com.umc.practice.dto.StoreResponseDTO.MissionDTO;
 import com.umc.practice.dto.StoreResponseDTO.NewMission;
 import com.umc.practice.dto.StoreResponseDTO.ReviewPreViewListDTO;
 import com.umc.practice.global.ResponseType.code.status.ErrorStatus;
@@ -16,6 +17,7 @@ import com.umc.practice.repository.MemberRepository;
 import com.umc.practice.repository.MissionRepository;
 import com.umc.practice.repository.ReviewRepository;
 import com.umc.practice.repository.StoreRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -62,10 +64,17 @@ public class StoreService {
         return storeRepository.findById(id);
     }
 
-    public StoreResponseDTO.ReviewPreViewListDTO getReviewList(Long StoreId, Integer page) {
-        Store store = storeRepository.findById(StoreId)
+    public StoreResponseDTO.ReviewPreViewListDTO getReviewList(Long storeId, Integer page) {
+        Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.STORE_NOT_FOUND));
         Page<Review> storePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
         return StoreConverter.reviewPreViewListDTO(storePage);
+    }
+
+    public List<StoreResponseDTO.MissionDTO> getMissionList(Long storeId, Integer page) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.STORE_NOT_FOUND));
+        Page<Mission> missionPage = missionRepository.findAllByStore(store, PageRequest.of(page, 10));
+        return StoreConverter.missionListDTO(missionPage);
     }
 }
