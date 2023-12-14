@@ -1,6 +1,8 @@
 package com.umc.practice.dto;
 
 import com.umc.practice.validator.ExistCategories;
+import com.umc.practice.validator.ExistUser;
+import com.umc.practice.validator.NonChallengingMission;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,7 +28,18 @@ public class MemberRequestDTO {
         String address;
         @Size(min = 5, max = 12)
         String specAddress;
+
         @ExistCategories
         List<Long> preferCategory;
+    }
+    @Getter
+    @AllArgsConstructor
+    @NonChallengingMission
+    public static class NewChallengeMission {
+        @NotNull
+        @ExistUser
+        private Long userId;
+        @NotNull
+        private Long missionId;
     }
 }

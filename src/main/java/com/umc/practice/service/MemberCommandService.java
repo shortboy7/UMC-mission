@@ -2,12 +2,18 @@ package com.umc.practice.service;
 
 import com.umc.practice.converter.MemberConverter;
 import com.umc.practice.converter.MemberPreferConverter;
+import com.umc.practice.converter.MissionConverter;
 import com.umc.practice.domain.FoodCategory;
 import com.umc.practice.domain.Member;
+import com.umc.practice.domain.MemberMission;
 import com.umc.practice.domain.MemberPrefer;
+import com.umc.practice.domain.Mission;
 import com.umc.practice.dto.MemberRequestDTO;
+import com.umc.practice.global.ResponseType.code.status.ErrorStatus;
+import com.umc.practice.global.ResponseType.exception.GeneralException;
 import com.umc.practice.repository.FoodCategoryRepository;
 import com.umc.practice.repository.MemberRepository;
+import com.umc.practice.repository.MissionRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberCommandService {
     private final MemberRepository memberRepository;
     private final FoodCategoryRepository foodCategoryRepository;
+    private final MissionRepository missionRepository;
 
     @Transactional
     public Member joinMember(MemberRequestDTO.JoinDto request) {
@@ -26,5 +33,18 @@ public class MemberCommandService {
         List<MemberPrefer> memberPrefers = MemberPreferConverter.toMemberPreferList(categories);
         memberPrefers.forEach(prefer -> prefer.setMember(member));
         return memberRepository.save(member);
+    }
+
+    @Transactional
+    public String challengeMission(
+            MemberRequestDTO.NewChallengeMission request) {
+        Mission mission = missionRepository.findById(request.getMissionId())
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MISSION_NOT_FOUND));
+        Member member = memberRepository.findById(request.getUserId())
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+        MemberMission memberMission = MissionConverter.toMemberMissionEntity(member, mission);
+        member.addMission(memberMission);
+        memberRepository.save(member);
+        return "SUCCESS";
     }
 }

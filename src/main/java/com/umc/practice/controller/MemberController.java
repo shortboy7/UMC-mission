@@ -6,8 +6,10 @@ import com.umc.practice.dto.MemberRequestDTO;
 import com.umc.practice.dto.MemberResponseDTO;
 import com.umc.practice.global.ResponseType.code.BaseResponse;
 import com.umc.practice.service.MemberCommandService;
+import com.umc.practice.validator.NonChallengingMission;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +25,11 @@ public class MemberController {
     public BaseResponse<MemberResponseDTO.JoinResultDTO> join(@RequestBody @Valid MemberRequestDTO.JoinDto request) {
         Member member = memberService.joinMember(request);
         return BaseResponse.onSuccess(MemberConverter.toJoinResultDTO(member));
+    }
+    @PostMapping("/challenge/{missionId}")
+    public BaseResponse<String> challenge(
+            @RequestBody @Valid MemberRequestDTO.NewChallengeMission request) {
+        String success = this.memberService.challengeMission(request);
+        return BaseResponse.onSuccess(success);
     }
 }

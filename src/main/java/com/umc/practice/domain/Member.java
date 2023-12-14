@@ -85,4 +85,9 @@ public class Member extends TrackEntity {
     public void removePrefer(MemberPrefer prefer) {
         this.memberPreferList.remove(prefer);
     }
+
+    public void addMission(MemberMission memberMission) {
+        this.memberMissionList.add(memberMission);
+    }
+
 }
