@@ -69,7 +69,7 @@ public class StoreService {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.STORE_NOT_FOUND));
         Page<Review> storePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
-        return ReviewConverter.reviewPreViewListDTO(storePage);
+        return StoreConverter.reviewPreViewListDTO(storePage);
     }
 
     public StoreResponseDTO.MissionListDTO getMissionList(Long storeId, Integer page) {

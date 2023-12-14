@@ -59,6 +59,6 @@ public class MemberCommandService {
         Member member = memberRepository.findById(userId)
                 .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
         Page<Review> reviewList = reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
-        return ReviewConverter.memberReviewPreViewListDTO(reviewList);
+        return MemberConverter.memberReviewPreViewListDTO(reviewList);
     }
 }

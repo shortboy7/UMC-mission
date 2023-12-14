@@ -22,7 +22,7 @@ public class MemberResponseDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ReviewPreViewListDTO{
-        private List<StoreResponseDTO.ReviewPreViewDTO> reviewList;
+        private List<MemberResponseDTO.ReviewPreViewDTO> reviewList;
         private Integer listSize;
         private Integer totalPage;
         private Long totalElements;
