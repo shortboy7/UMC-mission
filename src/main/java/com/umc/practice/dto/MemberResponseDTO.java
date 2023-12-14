@@ -41,4 +41,28 @@ public class MemberResponseDTO {
         private LocalDate createdAt;
     }
 
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class MissionDTO {
+        private Long id;
+        private Integer reward;
+        private LocalDate deadline;
+        private String missionSpec;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionListDTO{
+        private List<MemberResponseDTO.MissionDTO> missionList;
+        private Integer listSize;
+        private Integer totalPage;
+        private Long totalElements;
+        private Boolean isFirst;
+        private Boolean isLast;
+    }
+
 }

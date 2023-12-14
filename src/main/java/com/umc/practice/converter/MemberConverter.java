@@ -1,10 +1,15 @@
 package com.umc.practice.converter;
 
 import com.umc.practice.domain.Member;
+import com.umc.practice.domain.MemberMission;
+import com.umc.practice.domain.Mission;
 import com.umc.practice.domain.Review;
 import com.umc.practice.domain.enums.Gender;
+import com.umc.practice.domain.enums.MissionStatus;
 import com.umc.practice.dto.MemberRequestDTO;
 import com.umc.practice.dto.MemberResponseDTO;
+import com.umc.practice.dto.MemberResponseDTO.MissionDTO;
+import com.umc.practice.dto.MemberResponseDTO.MissionListDTO;
 import com.umc.practice.dto.MemberResponseDTO.ReviewPreViewDTO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -68,6 +73,29 @@ public class MemberConverter {
                 .totalElements(reviewList.getTotalElements())
                 .listSize(reviewPreViewDTOList.size())
                 .reviewList(reviewPreViewDTOList)
+                .build();
+    }
+
+    public static MemberResponseDTO.MissionDTO missionDTO(Mission mission) {
+        return MemberResponseDTO.MissionDTO.builder()
+                .id(mission.getId())
+                .missionSpec(mission.getMissionSpec())
+                .reward(mission.getReward())
+                .deadline(mission.getDeadline())
+                .build();
+    }
+    public static MemberResponseDTO.MissionListDTO missionListDTO(Page<MemberMission> memberMissionList) {
+        List<MissionDTO> missions = memberMissionList.stream()
+                .map(memberMission -> missionDTO(memberMission.getMission()))
+                .collect(Collectors.toList());
+
+        return MissionListDTO.builder()
+                .missionList(missions)
+                .isLast(memberMissionList.isLast())
+                .isFirst(memberMissionList.isFirst())
+                .totalPage(memberMissionList.getTotalPages())
+                .totalElements(memberMissionList.getTotalElements())
+                .listSize(missions.size())
                 .build();
     }
 

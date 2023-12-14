@@ -1,7 +1,6 @@
 package com.umc.practice.service;
 
 import com.umc.practice.converter.MissionConverter;
-import com.umc.practice.converter.ReviewConverter;
 import com.umc.practice.converter.StoreConverter;
 import com.umc.practice.domain.Member;
 import com.umc.practice.domain.Mission;
@@ -9,16 +8,13 @@ import com.umc.practice.domain.Review;
 import com.umc.practice.domain.Store;
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
-import com.umc.practice.dto.StoreResponseDTO.MissionDTO;
 import com.umc.practice.dto.StoreResponseDTO.NewMission;
-import com.umc.practice.dto.StoreResponseDTO.ReviewPreViewListDTO;
 import com.umc.practice.global.ResponseType.code.status.ErrorStatus;
 import com.umc.practice.global.ResponseType.exception.GeneralException;
 import com.umc.practice.repository.MemberRepository;
 import com.umc.practice.repository.MissionRepository;
 import com.umc.practice.repository.ReviewRepository;
 import com.umc.practice.repository.StoreRepository;
-import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

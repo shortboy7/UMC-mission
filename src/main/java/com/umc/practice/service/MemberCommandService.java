@@ -3,18 +3,19 @@ package com.umc.practice.service;
 import com.umc.practice.converter.MemberConverter;
 import com.umc.practice.converter.MemberPreferConverter;
 import com.umc.practice.converter.MissionConverter;
-import com.umc.practice.converter.ReviewConverter;
 import com.umc.practice.domain.FoodCategory;
 import com.umc.practice.domain.Member;
 import com.umc.practice.domain.MemberMission;
 import com.umc.practice.domain.MemberPrefer;
 import com.umc.practice.domain.Mission;
 import com.umc.practice.domain.Review;
+import com.umc.practice.domain.enums.MissionStatus;
 import com.umc.practice.dto.MemberRequestDTO;
 import com.umc.practice.dto.MemberResponseDTO;
 import com.umc.practice.global.ResponseType.code.status.ErrorStatus;
 import com.umc.practice.global.ResponseType.exception.GeneralException;
 import com.umc.practice.repository.FoodCategoryRepository;
+import com.umc.practice.repository.MemberMissionRepository;
 import com.umc.practice.repository.MemberRepository;
 import com.umc.practice.repository.MissionRepository;
 import com.umc.practice.repository.ReviewRepository;
@@ -32,6 +33,7 @@ public class MemberCommandService {
     private final FoodCategoryRepository foodCategoryRepository;
     private final MissionRepository missionRepository;
     private final ReviewRepository reviewRepository;
+    private final MemberMissionRepository memberMissionRepository;
 
     @Transactional
     public Member joinMember(MemberRequestDTO.JoinDto request) {
@@ -60,5 +62,13 @@ public class MemberCommandService {
                 .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
         Page<Review> reviewList = reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
         return MemberConverter.memberReviewPreViewListDTO(reviewList);
+    }
+
+    public MemberResponseDTO.MissionListDTO getMissionList(Long userId, MissionStatus status, Integer page) {
+        Member member = memberRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+        Page<MemberMission> memberMissions = memberMissionRepository.findAllByMemberAndStatus(member, status,
+                PageRequest.of(page, 10));
+        return MemberConverter.missionListDTO(memberMissions);
     }
 }
