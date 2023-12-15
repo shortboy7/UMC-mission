@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -80,5 +81,24 @@ public class MemberController {
             @RequestParam(name = "page") Integer page) {
         MissionListDTO missionList = memberService.getMissionList(userId, status, page);
         return BaseResponse.onSuccess(missionList);
+    }
+
+    @PatchMapping("/{userId}/{missionId}")
+    @Operation(summary = "특정 유저의 특정 미션을 진행완료로 바꾸는 API",description = "특정 유저의 특정 미션을 진행완료로 바꾸 API이며, 페이징을 포함합니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200",description = "OK, 성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH003", description = "access 토큰을 주세요!",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH004", description = "acess 토큰 만료",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "acess 토큰 모양이 이상함",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+    })
+    @Parameters({
+            @Parameter(name = "userId", description = "멤버의 아이디, path variable 입니다!"),
+            @Parameter(name = "missionId", description = "미션의 아이디, path variable 입니다!")
+    })
+    public BaseResponse<Long> makeMissionComplete(
+            @ExistUser @PathVariable(name = "userId") Long userId,
+            @PathVariable(name = "missionId") Long missionId) {
+        Long memberMissionId = memberService.makeMissionComplete(userId, missionId);
+        return BaseResponse.onSuccess(memberMissionId);
     }
 }

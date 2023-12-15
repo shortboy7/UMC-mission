@@ -71,4 +71,19 @@ public class MemberCommandService {
                 PageRequest.of(page, 10));
         return MemberConverter.missionListDTO(memberMissions);
     }
+
+    @Transactional
+    public Long makeMissionComplete(Long memberId, Long missionId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+        Mission mission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MISSION_NOT_FOUND));
+        MemberMission memberMission = memberMissionRepository.findByMemberAndMission(member, mission)
+                .orElseThrow(() -> new GeneralException((ErrorStatus.MEMBER_NOT_CHALLENGE_SUCH_MISSION)));
+        if (memberMission.getStatus().equals(MissionStatus.COMPLETE))
+            throw new GeneralException(ErrorStatus.MEMBER_ALREADY_COMPLETE_SUCH_MISSION);
+        memberMission.setStatus(MissionStatus.COMPLETE);
+        memberMissionRepository.save(memberMission);
+        return memberMission.getId();
+    }
 }

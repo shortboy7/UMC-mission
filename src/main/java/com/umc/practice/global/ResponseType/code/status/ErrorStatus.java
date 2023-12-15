@@ -19,6 +19,8 @@ public enum ErrorStatus implements BaseErrorCode {
     // 멤버 에러
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "사용자가 없습니다."),
     NICKNAME_NOT_EXIST(HttpStatus.BAD_REQUEST, "MEMBER4002", "닉네임은 필수 입니다."),
+    MEMBER_NOT_CHALLENGE_SUCH_MISSION(HttpStatus.BAD_REQUEST, "MEMBER4003", "도전 중인 미션이 아닙니다"),
+    MEMBER_ALREADY_COMPLETE_SUCH_MISSION(HttpStatus.BAD_REQUEST, "MEMBER4003", "이미 도전이 완료된 미션입니다"),
 
     // 게시글 관련 에러
     ARTICLE_NOT_FOUND(HttpStatus.NOT_FOUND, "ARTICLE4001", "게시글이 없습니다."),
