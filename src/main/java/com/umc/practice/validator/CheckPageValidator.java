@@ -25,6 +25,6 @@ public class CheckPageValidator implements HandlerMethodArgumentResolver {
         if (value <= 0) {
             throw new GeneralException(ErrorStatus.PAGE_SHOULD_BE_POSITIVE);
         }
-        return value + 1;
+        return value - 1;
     }
 }
