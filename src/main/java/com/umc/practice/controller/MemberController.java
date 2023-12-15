@@ -9,6 +9,7 @@ import com.umc.practice.dto.MemberResponseDTO.MissionListDTO;
 import com.umc.practice.dto.MemberResponseDTO.ReviewPreViewListDTO;
 import com.umc.practice.global.ResponseType.code.BaseResponse;
 import com.umc.practice.service.MemberCommandService;
+import com.umc.practice.validator.CheckPage;
 import com.umc.practice.validator.ExistUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -59,7 +60,7 @@ public class MemberController {
     })
     public BaseResponse<MemberResponseDTO.ReviewPreViewListDTO> getReviewList(
             @ExistUser @PathVariable(name = "userId") Long userId,
-            @RequestParam(name = "page") Integer page) {
+            @CheckPage @RequestParam(name = "page") Integer page) {
         ReviewPreViewListDTO reviewList = memberService.getReviewList(userId, page);
         return BaseResponse.onSuccess(reviewList);
     }
@@ -78,7 +79,7 @@ public class MemberController {
     public BaseResponse<MemberResponseDTO.MissionListDTO> getChallengingMissionList(
             @ExistUser @PathVariable(name = "userId") Long userId,
             @RequestParam(name = "status") MissionStatus status,
-            @RequestParam(name = "page") Integer page) {
+            @CheckPage @RequestParam(name = "page") Integer page) {
         MissionListDTO missionList = memberService.getMissionList(userId, status, page);
         return BaseResponse.onSuccess(missionList);
     }

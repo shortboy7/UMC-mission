@@ -2,7 +2,6 @@ package com.umc.practice.controller;
 
 import com.umc.practice.dto.StoreRequestDTO;
 import com.umc.practice.dto.StoreResponseDTO;
-import com.umc.practice.dto.StoreResponseDTO.MissionDTO;
 import com.umc.practice.dto.StoreResponseDTO.MissionListDTO;
 import com.umc.practice.dto.StoreResponseDTO.NewMission;
 import com.umc.practice.dto.StoreResponseDTO.NewReview;
@@ -10,6 +9,7 @@ import com.umc.practice.dto.StoreResponseDTO.NewStore;
 import com.umc.practice.dto.StoreResponseDTO.ReviewPreViewListDTO;
 import com.umc.practice.global.ResponseType.code.BaseResponse;
 import com.umc.practice.service.StoreService;
+import com.umc.practice.validator.CheckPage;
 import com.umc.practice.validator.ExistStore;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,7 +67,7 @@ public class StoreController {
     })
     public BaseResponse<StoreResponseDTO.ReviewPreViewListDTO> getReviewList(
             @ExistStore @PathVariable(name = "storeId") Long storeId,
-            @RequestParam(name = "page") Integer page) {
+            @CheckPage  @RequestParam(name = "page") Integer page) {
         ReviewPreViewListDTO reviewList = storeService.getReviewList(storeId, page);
         return BaseResponse.onSuccess(reviewList);
     }
@@ -86,7 +85,7 @@ public class StoreController {
     })
     public BaseResponse<StoreResponseDTO.MissionListDTO> getMissionList(
             @ExistStore @PathVariable(name = "storeId") Long storeId,
-            @RequestParam(name = "page") Integer page) {
+            @CheckPage @RequestParam(name = "page") Integer page) {
         MissionListDTO missionList = storeService.getMissionList(storeId, page);
         return BaseResponse.onSuccess(missionList);
     }
